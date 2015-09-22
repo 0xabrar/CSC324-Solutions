@@ -102,7 +102,24 @@
 (define (count-bool predicate lst)
   (length (filter (lambda (x) (predicate x)) lst)))
  
+; 19: take a list of unary functions and a value arg, and then return a list of the results of applying each function to arg
+(define (apply-func-list func-lst arg)
+  (map (lambda (x) (x arg)) func-lst))
 
 ; 20: is foldl tail-recursive?
-; foldl is tail recursive: there is no work to be done after the fold recursive call (in tail call position)
+; foldl is tail recursive: there is no work to be done after the foldl recursive call (in tail call position)
 
+; 21a: implement map using foldl
+(define (foldl-map func lst)
+  (foldl (lambda (x acc)
+           (cons (func x) acc))
+         '()
+         lst))
+; 21b: implement reduce using foldl
+(define (foldl-filter func lst)
+  (foldl(lambda (x acc)
+      (if (func x)
+        (append acc (list x))
+        acc))
+    empty
+    lst))
